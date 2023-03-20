@@ -7,6 +7,20 @@
 using System.Security.Cryptography;
 
 ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+Dictionary<string, int> octave = new Dictionary<string, int>()
+    {
+        {"A", 196},//sol
+        {"Z", 220},//la
+        {"E", 246},//si
+        {"R", 261},//do
+        {"T", 293},//re
+        {"Y", 329},//mi
+        {"U", 349},//fa
+        {"I", 392},//sol
+        {"O", 440 },//la
+        {"P", 493} //si
+    };
+
 
 Console.WriteLine("Bienvenue dans cette application de test de la classe console ! ");
 
@@ -20,33 +34,42 @@ while (!closeApp)
     Console.WriteLine("2 - Changer la couleur de fond");
     Console.WriteLine("3 - Faire un beep");
     Console.WriteLine("4 - Joue une musique");
+    Console.WriteLine("5 - Piano");
+    Console.WriteLine("6 - Play music from string");
+    //Au clair de la lune : rrrtytryttr    rrrtytryttr    ttttzz   treza   rrrtytryttr
 
     var reponse = Console.ReadLine();
-    
 
-    if(reponse == "1")
+    switch (reponse)
     {
-        var choiceColor = GetChoiceColorUser();
-        //Change la couleur de police
-        Console.ForegroundColor = choiceColor;
-    }
-    else if(reponse == "2")
-    {
-        //Change la couleur de fond de police
-        var choiceColor = GetChoiceColorUser();
-        Console.BackgroundColor = choiceColor;
-    }
-    else if(reponse == "3")
-    {
-        Console.Beep();
-    }
-    else if (reponse == "4")
-    {
-        StarWarsMusic();
-    }
-    else
-    {
+        case "1" :
+            var choiceColor = GetChoiceColorUser();
+            //Change la couleur de police
+            Console.ForegroundColor = choiceColor;
+            break;
+        case "2":
+            //Change la couleur de fond de police
+            var choiceColorTwo = GetChoiceColorUser();
+            Console.BackgroundColor = choiceColorTwo;
+            break;
+        case "3":
+            Console.Beep();
+            break;
+        case "4":
+            StarWarsMusic();
+            break;
+        case "5":
+            Console.WriteLine("Voici votre piano");
+            Piano();
+            break;
+        case "6":
+            Console.WriteLine("Entrez votre chaîne de caractères");
+            string chaineAJouer = Console.ReadLine();
+            PlayStringPiano(chaineAJouer);
+            break;
+        default:
             Console.WriteLine("Ce choix n'existe pas");
+            break;
     }
 
     Console.Write("Voulez-vous continuer ? (O/N) : ");
@@ -57,7 +80,25 @@ while (!closeApp)
     }
 }
 
-//Application se ferme
+void PlayStringPiano(string chaineAJouer)
+{
+    //Récupérer chaque caractères de ma chaîne
+
+    foreach (var lettre in chaineAJouer)
+    {
+        //Récupérer le consoleKey depuis un char
+        if (lettre == ' ')
+        {
+            Thread.Sleep(200);
+        }
+        else
+        {
+            int frequence = octave[lettre.ToString().ToUpper()];
+            Console.Beep(frequence, 200);
+        }
+    }
+}
+
 
 //Retourner l'index de la couleur voulu par rapport au tableau colors
 ConsoleColor GetChoiceColorUser()
@@ -79,7 +120,6 @@ ConsoleColor GetChoiceColorUser()
 void StarWarsMusic()
 {
     
-
     int c = 261;
     int d = 294;
     int e = 329;
@@ -280,7 +320,29 @@ void StarWarsMusic()
 
 }
 
+void Piano()
+{
+    bool continuePiano = true;
 
+    Console.WriteLine("Vous pouvez utiliser les touches azertyuiop pour jouer de votre octave favorite");
+    Console.WriteLine("Tapez sur la touche Esc pour quitter");
+    while (continuePiano)
+    {
+        var noteUser = Console.ReadKey();
+        var noteLettre = noteUser.Key.ToString();
+        
+        if(noteUser.Key == ConsoleKey.Escape)
+        {
+            continuePiano = false;
+        }
+        
+        if (octave.ContainsKey(noteLettre))
+        {
+            Console.Beep(octave[noteLettre], 200);
+        }
+    }
+    Console.WriteLine("");
+}
 
 
 void centeredOutput(string input)
