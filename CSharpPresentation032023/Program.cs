@@ -4,7 +4,13 @@
 //Faire un beep
 
 //Ce tableau contient toutes les couleurs possible de la console
+using InstrumentNamespace;
 using System.Security.Cryptography;
+
+Instrument Trompette = new Instrument("Trompette", "Cuivre", "...");
+Instrument Guitare = new Instrument("Guitare", "Cordes", "...");
+
+Console.WriteLine(Trompette.Famille);
 
 ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
 Dictionary<string, int> octave = new Dictionary<string, int>()
@@ -98,8 +104,6 @@ void PlayStringPiano(string chaineAJouer)
         }
     }
 }
-
-
 //Retourner l'index de la couleur voulu par rapport au tableau colors
 ConsoleColor GetChoiceColorUser()
 {
@@ -115,8 +119,6 @@ ConsoleColor GetChoiceColorUser()
     int indexChoisiInt = Convert.ToInt32(indexChoisi);
     return colors[indexChoisiInt];
 }
-
-
 void StarWarsMusic()
 {
     
@@ -319,7 +321,6 @@ void StarWarsMusic()
     Console.Beep(a, 1000);
 
 }
-
 void Piano()
 {
     bool continuePiano = true;
@@ -343,8 +344,6 @@ void Piano()
     }
     Console.WriteLine("");
 }
-
-
 void centeredOutput(string input)
 {
     Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (input.Length / 2)) + "}", input));
