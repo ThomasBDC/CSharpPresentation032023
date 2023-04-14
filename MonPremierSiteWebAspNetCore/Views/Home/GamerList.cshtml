@@ -1,0 +1,26 @@
+﻿
+@model GamersViewModel;
+
+<h1>ici on est dans la vue toto</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>GamerTag</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @*Je veux accéder à mon view Model*@
+        @foreach (var monGamer in Model.Gamers)
+        {
+            <tr>
+                <td>@monGamer.Id</td>
+                <td class="@(monGamer.Id== 3 ? "fw-bold" : "")">@monGamer.FullName</td>
+                <td>@monGamer.GamerTag</td>
+                <td><button class="btn btn-primary">+</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
